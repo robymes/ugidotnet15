@@ -17,7 +17,7 @@ try {
     bodyParser = require("body-parser");
     mongoClient = require("mongodb").MongoClient;
     app = express();
-    mongoUrl = "mongodb://" + process.env.MONGO_PORT_27017_TCP_ADDR + ":" + process.env.MONGO_PORT_27017_TCP_PORT + "/ugidotnet15";
+    mongoUrl = "mongodb://mongo:27017/ugidotnet15";
     console.log(mongoUrl);
     db;
     fs = require("fs");

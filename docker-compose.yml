@@ -2,7 +2,6 @@ version: "2"
 services:
     mongo:
         image: mongo:3.2
-        network_mode: bridge
         ports:
             - "27017:27017"
         container_name: mongo
@@ -12,7 +11,6 @@ services:
     nginx-proxy:
         image: jwilder/nginx-proxy
         container_name: nginx-proxy
-        network_mode: bridge
         ports:
             - "80:80"
         volumes:
@@ -21,7 +19,6 @@ services:
     node-rest-srvc:
         image: ugidotnet15/node-rest-srvc:latest
         container_name: node-rest-srvc
-        network_mode: bridge
         environment:
             - VIRTUAL_HOST=node-rest-srvc.local
         links:
