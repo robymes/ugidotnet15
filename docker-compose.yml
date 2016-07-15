@@ -1,0 +1,15 @@
+version: "2"
+services:
+    mongo:
+        image: mongo:latest
+        ports:
+            - "27017:27017"
+        container_name: mongo
+    node-rest-srvc:
+        build: ./node-rest-srvc
+        image: robymes/node-rest-srvc:v1.0
+        container_name: node-rest-srvc
+        ports:
+            - "8080:8080"
+        links:
+            - mongo
