@@ -1,7 +1,7 @@
 {
     "name": "ugidotnet15_node_docker",
     "version": "1.0.0",
-    "description": "Node.js on Docker for UGIDotNET 15",
+    "description": "Node.js REST Service on Docker for UGIDotNET 15",
     "author": "Robero Messora <robymes@gmail.com>",
     "main": "server.js",
     "scripts": {

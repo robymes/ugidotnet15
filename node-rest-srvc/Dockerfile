@@ -1,10 +1,10 @@
 ###########################################
 # Dockerfile to build an node REST service
 ###########################################
-# Author: robymes
-MAINTAINER robymes <robymes@gmail.com>
 # Base image is Ubuntu
 FROM node:argon
+# Author: robymes
+MAINTAINER robymes <robymes@gmail.com>
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
