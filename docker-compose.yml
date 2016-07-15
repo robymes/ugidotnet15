@@ -1,15 +1,26 @@
 version: "2"
 services:
     mongo:
-        image: mongo:latest
+        image: mongo:3.3
         ports:
             - "27017:27017"
         container_name: mongo
-    node-rest-srvc:
-        build: ./node-rest-srvc
-        image: robymes/node-rest-srvc:v1.0
-        container_name: node-rest-srvc
+        volumes:
+            - mongodata:/data/db
+        command: --smallfiles --rest
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
         ports:
-            - "8080:8080"
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+    node-rest-srvc:
+        image: ugidotnet15/node-rest-srvc:latest
+        container_name: node-rest-srvc
+        environment:
+            - VIRTUAL_HOST=node-rest-srvc.local
         links:
-            - mongo
+            - mongo        
+volumes:
+    mongodata:

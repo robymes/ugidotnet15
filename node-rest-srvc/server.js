@@ -51,7 +51,7 @@ try {
         });
     });
 
-    server = app.listen(8080, function () {
+    server = app.listen(80, function () {
         var host = server.address().address,
             port = server.address().port;
         console.log("UGIDotNET 15 REST API listening at http://%s:%s", host, port);
