@@ -12,7 +12,7 @@ services:
         image: ugidotnet15/node-rest-srvc:latest
         container_name: node-rest-srvc
         ports:
-            - "8080:80"         
+            - "80:80"         
         links:
             - mongo:mongo   
 volumes:
