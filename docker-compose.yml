@@ -8,19 +8,11 @@ services:
         volumes:
             - mongodata:/data/db
         command: --smallfiles --rest --httpinterface
-    nginx-proxy:
-        image: jwilder/nginx-proxy
-        container_name: nginx-proxy
-        ports:
-            - "80:80"
-        volumes:
-            - /var/run/docker.sock:/tmp/docker.sock:ro
-        restart: always
     node-rest-srvc:
         image: ugidotnet15/node-rest-srvc:latest
         container_name: node-rest-srvc
-        environment:
-            - VIRTUAL_HOST=node-rest-srvc.local
+        ports:
+            - "8080:80"         
         links:
             - mongo:mongo   
 volumes:

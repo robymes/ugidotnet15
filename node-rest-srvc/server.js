@@ -4,23 +4,23 @@
 
 var express,
     bodyParser,
+    mongoDb,
     mongoClient,
     mongoUrl,
     db,
     app,
-    fs,
     server,
-    insertDocument;
+    checkUserCollection;
 
 try {
     express = require("express");
     bodyParser = require("body-parser");
-    mongoClient = require("mongodb").MongoClient;
+    mongoDb = require("mongodb");
+    mongoClient = mongoDb.MongoClient;
     app = express();
     mongoUrl = "mongodb://mongo:27017/ugidotnet15";
     console.log(mongoUrl);
     db;
-    fs = require("fs");
     mongoClient.connect(mongoUrl, function (err, database) {
         if (!database) {
             throw("MongoDB database is null");
@@ -30,24 +30,42 @@ try {
     });
     app.use(bodyParser.json());
 
-    insertDocument = function (db, document, callback) {
-        var collection = db.collection("users");
-        collection.insertOne(document, function (err, result) {
-            callback(err, JSON.stringify(result.ops[0]));
+    checkUserCollection = function () {
+        db.createCollection("users", function (err, collection) {
+            return;
         });
     };
 
     app.post("/addUser", function (req, res) {
-        var data = req.body;
-        insertDocument(db, data, function (err, result) {
+        var collection;
+        checkUserCollection();
+        collection = db.collection("users");
+        collection.insertOne(req.body, {
+            w: 1
+        }, function (err, result) {
+            res.status(201).send(result);
+        });
+    });
+
+    app.post("/deleteUser", function (req, res) {
+        var collection;
+        checkUserCollection();
+        collection = db.collection("users");
+        collection.remove({
+            _id: new mongoDb.ObjectID(req.body.id)
+        }, {
+            w: 1
+        }, function (err, result) {
             res.status(201).send(result);
         });
     });
 
     app.get("/listUsers", function (req, res) {
-        fs.readFile( __dirname + "/" + "users.json", "utf8", function (err, data) {
-            console.log( data );
-            res.end( data );
+        var collection;
+        checkUserCollection();
+        collection = db.collection("users");
+        collection.find().toArray(function (err, items) {
+            res.status(201).send(JSON.stringify(items));
         });
     });
 
