@@ -1,0 +1,19 @@
+version: "2"
+services:
+    mongo:
+        image: mongo:3.2
+        ports:
+            - "27017:27017"
+        container_name: mongo
+        volumes:
+            - mongodata:/data/db
+        command: --smallfiles --rest --httpinterface
+    node-rest-srvc:
+        image: node-rest-srvc:local
+        container_name: node-rest-srvc
+        ports:
+            - "8080:80"         
+        links:
+            - mongo:mongo   
+volumes:
+    mongodata:
