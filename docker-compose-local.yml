@@ -2,6 +2,7 @@ version: "2"
 services:
     mongo:
         image: mongo:3.2
+        container_name: mongo
         ports:
             - "27017:27017"
         volumes:
@@ -11,6 +12,7 @@ services:
             - backend
     nginx-proxy:
         image: jwilder/nginx-proxy
+        container_name: nginx-proxy
         ports:
             - "80:80"
         volumes:
@@ -30,4 +32,6 @@ volumes:
     mongodata:
 networks:
     proxy:
+        external:
+            name: nginx-proxy
     backend:
