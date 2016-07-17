@@ -11,6 +11,7 @@
         "express": "4.14.0",
         "body-parser": "1.15.2",
         "mongodb": "2.2.1",
-        "json-query": "2.1.0"
+        "json-query": "2.1.0",
+        "uuid": "2.0.2"
     }
 }

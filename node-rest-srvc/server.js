@@ -7,12 +7,17 @@ var express,
     mongoDb,
     mongoClient,
     mongoUrl,
+    uuid,
+    instanceUuid,    
     db,
     app,
     server,
-    checkUserCollection;
+    checkUserCollection,
+    createResult;
 
 try {
+    uuid = require("uuid");
+    instanceUuid = uuid.v4();
     express = require("express");
     bodyParser = require("body-parser");
     mongoDb = require("mongodb");
@@ -30,6 +35,13 @@ try {
     });
     app.use(bodyParser.json());
 
+    createResult = function (res) {
+        return {
+            instanceId: instanceUuid,
+            result: res
+        };
+    };
+
     checkUserCollection = function () {
         db.createCollection("users", function (err, collection) {
             return;
@@ -43,7 +55,7 @@ try {
         collection.insertOne(req.body, {
             w: 1
         }, function (err, result) {
-            res.status(201).send(result);
+            res.status(201).send(createResult(result));
         });
     });
 
@@ -56,7 +68,7 @@ try {
         }, {
             w: 1
         }, function (err, result) {
-            res.status(201).send(result);
+            res.status(201).send(createResult(result));
         });
     });
 
@@ -65,7 +77,7 @@ try {
         checkUserCollection();
         collection = db.collection("users");
         collection.find().toArray(function (err, items) {
-            res.status(201).send(JSON.stringify(items));
+            res.status(201).send(createResult(items));
         });
     });
 
